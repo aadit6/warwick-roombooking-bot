@@ -1,0 +1,24 @@
+name: Warwick WRB Checker
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # every 15 mins
+  workflow_dispatch:         # allow manual run
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Run checker
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+        run: |
+          uv run python check_wrb2526.py
