@@ -1,6 +1,8 @@
 # Warwick WRB 25/26 Availability Checker
 
-🤖 Automated bot that monitors the Warwick University Web Room Booking System 2025/26 and sends email notifications when the booking system becomes available.
+Automated bot that monitors the Warwick University Web Room Booking System and sends email notifications when it becomes available for 25/26.
+
+Why - the University/SU doesn't notify societies when the WRB system becomes available and popular rooms (such as the Oculus) get booked weeks in advance so this gives an advantage
 
 ## Features
 
@@ -65,7 +67,3 @@ For detailed testing instructions, development setup, and troubleshooting, see *
 - ✅ **Working**: Bot successfully monitors and detects page changes
 - ✅ **Tested**: Comprehensive test suite validates all scenarios
 - ✅ **Production Ready**: Automated monitoring via GitHub Actions
-
----
-
-**💡 The bot will notify you the moment Warwick opens the 2025/26 booking system!**
