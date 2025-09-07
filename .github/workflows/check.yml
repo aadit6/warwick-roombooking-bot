@@ -1,24 +1,54 @@
-name: Warwick WRB Checker
+name: 🤖 Warwick WRB 2025/26 Monitor
 
 on:
   schedule:
-    - cron: "*/15 * * * *"   # every 15 mins
-  workflow_dispatch:         # allow manual run
+    - cron: "*/15 * * * *"   # Every 15 minutes
+  workflow_dispatch:         # Manual trigger
+    inputs:
+      test_mode:
+        description: 'Run in test mode (shows page analysis)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+        - 'false'
+        - 'true'
 
 jobs:
-  check:
+  monitor:
+    name: Monitor WRB 2025/26 Page
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout repo
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install uv
+      - name: 🛠️ Install uv package manager
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-      - name: Run checker
+      - name: 🔍 Monitor Warwick booking page
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
         run: |
-          uv run python check_wrb2526.py
+          echo "🤖 Starting Warwick WRB 2025/26 monitoring..."
+          echo "📅 Timestamp: $(date)"
+          echo "🔗 Target URL: https://abs.warwick.ac.uk/WRB2526/"
+          
+          if [ "${{ github.event.inputs.test_mode }}" = "true" ]; then
+            echo "🧪 Running in test mode - showing page analysis"
+            uv run python tests/page_summary.py
+          else
+            echo "🤖 Running bot check..."
+            uv run python check_wrb2526.py
+          fi
+          
+          echo "✅ Monitoring check completed at $(date)"
+
+      - name: 📊 Run verification tests (manual trigger only)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "🧪 Running verification tests..."
+          uv run python -m unittest tests.test_check_wrb2526.TestWRBChecker.test_check_page_still_unavailable -v
+          echo "✅ Verification complete"
