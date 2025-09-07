@@ -36,7 +36,7 @@ jobs:
           echo "📅 Timestamp: $(date)"
           echo "🔗 Target URL: https://abs.warwick.ac.uk/WRB2526/"
           
-          if [ "${{ github.event.inputs.test_mode }}" = "true" ]; then
+          if [ "${{ github.event.inputs.test_mode || 'false' }}" = "true" ]; then
             echo "🧪 Running in test mode - showing page analysis"
             uv run python tests/page_summary.py
           else
