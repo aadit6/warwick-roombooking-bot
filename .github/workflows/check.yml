@@ -2,7 +2,7 @@ name: 🤖 Warwick WRB 2025/26 Monitor
 
 on:
   schedule:
-    - cron: "*/15 * * * *"   # Every 15 minutes
+    - cron: "* * * * *"      # Every minute (TESTING)
   workflow_dispatch:         # Manual trigger
     inputs:
       test_mode:
