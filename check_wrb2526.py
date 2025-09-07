@@ -26,17 +26,17 @@ def send_email(status: str):
     msg["To"] = TO_EMAIL
 
     try:
-        print(f"📧 Attempting to send email to {TO_EMAIL}...")
+        print(f"Attempting to send email to {TO_EMAIL}...")
         # Use SMTP_SSL for port 465 (SSL connection)
         with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, timeout=30) as server:
-            print("🔗 Connected to SMTP server with SSL")
+            print("Connected to SMTP server with SSL")
             server.login(EMAIL_USER, EMAIL_PASS)
             print("✅ Logged in successfully")
             server.send_message(msg)
-            print("📬 Email sent successfully!")
+            print("Email sent successfully!")
     except smtplib.SMTPAuthenticationError as e:
         print(f"❌ SMTP Authentication failed: {e}")
-        print("💡 Make sure you're using a Gmail App Password, not your regular password")
+        print("Make sure you're using a Gmail App Password, not your regular password")
         raise
     except smtplib.SMTPException as e:
         print(f"❌ SMTP Error: {e}")
